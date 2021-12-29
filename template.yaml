@@ -19,10 +19,10 @@ Resources:
       Handler: src/handlers/worker.index
       Runtime: nodejs12.x
       Events:
-        Api:
-          Type: Api
+        MySQSEvent:
+          Type: SQS
           Properties:
-            Path: /sss
-            Method: get
+            Queue: !GetAtt MySqsQueue.Arn
+            BatchSize: 10
   MySqsQueue:
     Type: AWS::SQS::Queue

@@ -1,10 +1,19 @@
 const AWS = require('aws-sdk');
-AWS.config.update({region: 'us-east-2'});
+AWS.config.update({ region: 'us-east-2' });
 
 
-exports.index = async (event)=>{
-    console.log(event)
-    return event
+exports.index = async (event) => {
+
+    let responseBody = {
+        message: 'Push message successfully',
+    };
+
+    let response = {
+        statusCode: 200,
+        body: JSON.stringify(responseBody)
+    };
+
+    return response;
 }
 // exports.index = async function (event, context) {
 //     event.Records.forEach(record => {
