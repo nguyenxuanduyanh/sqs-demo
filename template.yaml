@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Example of processing messages on an SQS queue with Lambda
+Resources:
+  ListenerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/listener.index
+      Runtime: nodejs12.x
+      Events:
+        MySQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt MySqsQueue.Arn
+            BatchSize: 10
+  WorkerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/listener.index
+      Runtime: nodejs12.x
+      Events:
+        MySQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt MySqsQueue.Arn
+            BatchSize: 10
+  MySqsQueue:
+    Type: AWS::SQS::Queue
