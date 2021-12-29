@@ -26,3 +26,7 @@ Resources:
             BatchSize: 10
   MySqsQueue:
     Type: AWS::SQS::Queue
+    Properties:
+      FifoQueue: true
+      QueueName: demo_trustana_queue.fifo
+
