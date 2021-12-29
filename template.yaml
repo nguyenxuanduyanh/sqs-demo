@@ -8,21 +8,21 @@ Resources:
       Handler: src/handlers/listener.index
       Runtime: nodejs12.x
       Events:
-        MySQSEvent:
-          Type: SQS
+        Api:
+          Type: Api
           Properties:
-            Queue: !GetAtt MySqsQueue.Arn
-            BatchSize: 10
+            Path: /ratings
+            Method: get
   WorkerFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/listener.index
+      Handler: src/handlers/worker.index
       Runtime: nodejs12.x
       Events:
-        MySQSEvent:
-          Type: SQS
+        Api:
+          Type: Api
           Properties:
-            Queue: !GetAtt MySqsQueue.Arn
-            BatchSize: 10
+            Path: /sss
+            Method: get
   MySqsQueue:
     Type: AWS::SQS::Queue
