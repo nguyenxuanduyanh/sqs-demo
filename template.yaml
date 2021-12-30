@@ -8,14 +8,14 @@ Resources:
       Handler: src/handlers/listener.index
       Runtime: nodejs12.x
       Policies:
-      - SQSSendMessagePolicy:
-          QueueName: !GetAtt MySqsQueue.QueueName
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt MySqsQueue.QueueName
       Events:
         Api:
           Type: Api
           Properties:
             Path: /ratings
-            Method: get
+            Method: post
       Environment:
         Variables:
           QUEUE_URL: !Ref MySqsQueue # Gets SQS Queue URL
