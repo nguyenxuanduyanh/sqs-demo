@@ -1,5 +1,4 @@
-import { SendMessageCommand } from  "@aws-sdk/client-sqs";
-import  { SQSClient } from "@aws-sdk/client-sqs";
+const {SendMessageCommand, SQSClient} = require( "@aws-sdk/client-sqs");
 
 const QUEUE_URL = process.env.QUEUE_URL;
 
