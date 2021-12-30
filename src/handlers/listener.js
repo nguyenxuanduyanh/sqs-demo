@@ -9,14 +9,16 @@ exports.index = async (event) => {
     const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
 
     let params = {
-        QueueName: 'demo-trustana-queue'
+        MessageBody: 'send queue demo',
+        QueueUrl: QUEUE_URL
     };
     
-    sqs.sendMessage(params, function(err, data) {
-        if (err) {
-            console.log("Error", err);
-        } else {
-            console.log("Success", data);
+    await sqs.sendMessage(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else {
+            // successful response
+            console.log('Thanh Cong');
+            console.log(data);
         }
     });
 
