@@ -7,6 +7,9 @@ Resources:
     Properties:
       Handler: src/handlers/listener.index
       Runtime: nodejs12.x
+      Policies:
+      - SQSPollerPolicy:
+          QueueName: !GetAtt MySqsQueue.QueueName
       Events:
         Api:
           Type: Api
