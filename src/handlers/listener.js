@@ -1,8 +1,20 @@
 const AWS = require('aws-sdk');
-AWS.config.update({ region: 'us-east-2' });
-
+AWS.config.update({ region: 'us-east-1' });
 
 exports.index = async (event) => {
+    console.log('VAO LISTENER');
+
+    const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
+    let params = {
+        QueueName: 'demo-trustana-queue'
+    };
+    sqs.sendMessage(params, function(err, data) {
+        if (err) {
+            console.log("Error", err);
+        } else {
+            console.log("Success", data);
+        }
+    });
 
     let responseBody = {
         message: 'Push message successfully',
@@ -15,25 +27,3 @@ exports.index = async (event) => {
 
     return response;
 }
-// exports.index = async function (event, context) {
-//     event.Records.forEach(record => {
-//         const { body } = record;
-//         console.log(body);
-//         let sqs = new AWS.SQS({apiVersion: '2012-11-05'});
-//         let queueURL = "SQS_QUEUE_URL_DEMO";
-//
-//         let params = {
-//             AttributeNames: [
-//                 "SentTimestamp"
-//             ],
-//             MaxNumberOfMessages: 10,
-//             MessageAttributeNames: [
-//                 "All"
-//             ],
-//             QueueUrl: queueURL,
-//             VisibilityTimeout: 20,
-//             WaitTimeSeconds: 0
-//         };
-//     });
-//     return {};
-// }
