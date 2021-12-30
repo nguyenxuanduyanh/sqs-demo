@@ -1,7 +1,13 @@
+import { SendMessageCommand } from  "@aws-sdk/client-sqs";
+import  { SQSClient } from "@aws-sdk/client-sqs";
+
 const QUEUE_URL = process.env.QUEUE_URL;
 
-import { SendMessageCommand } from  "@aws-sdk/client-sqs";
-import { sqsClient } from  "./libs/sqsClient.js";
+// Set the AWS Region.
+const REGION = "us-east-1"
+// Create SQS service object.
+const sqsClient = new SQSClient({ region: REGION });
+
 
 const params = {
     MessageBody: "Information about current NY Times fiction bestseller for week of 12/11/2016.",
