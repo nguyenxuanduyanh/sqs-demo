@@ -1,24 +1,26 @@
-const AWS = require('aws-sdk');
-AWS.config.update({ region: 'us-east-1' });
 const QUEUE_URL = process.env.QUEUE_URL;
+
+import { SendMessageCommand } from  "@aws-sdk/client-sqs";
+import { sqsClient } from  "./libs/sqsClient.js";
+
+const params = {
+    MessageBody: "Information about current NY Times fiction bestseller for week of 12/11/2016.",
+    // MessageDeduplicationId: "TheWhistler",  // Required for FIFO queues
+    // MessageGroupId: "Group1",  // Required for FIFO queues
+    QueueUrl: QUEUE_URL //SQS_QUEUE_URL; e.g., 'https://sqs.REGION.amazonaws.com/ACCOUNT-ID/QUEUE-NAME'
+  };
 
 exports.index = async (event) => {
     console.log('VAO LISTENER');
     console.log("QUEUE_URL",QUEUE_URL);
 
-    const sqs = new AWS.SQS({apiVersion: '2012-11-05'});
-
-    let params = {
-        QueueName: 'demo-trustana-queue'
-    };
-    
-    sqs.sendMessage(params, function(err, data) {
-        if (err) {
-            console.log("Error", err);
-        } else {
-            console.log("Success", data);
-        }
-    });
+    try {
+        const data = await sqsClient.send(new SendMessageCommand(params));
+        console.log("Success, message sent. MessageID:", data.MessageId);
+        return data; // For unit tests.
+      } catch (err) {
+        console.log("Error", err);
+      }
 
     let responseBody = {
         message: 'Push message successfully',
