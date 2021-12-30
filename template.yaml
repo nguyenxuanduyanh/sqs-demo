@@ -24,9 +24,11 @@ Resources:
           Properties:
             Queue: !GetAtt MySqsQueue.Arn
             BatchSize: 10
+      Environment:
+        Variables:
+          QUEUE_URL: !Ref InvocationQueue # Gets SQS Queue URL
   MySqsQueue:
     Type: AWS::SQS::Queue
     Properties:
       FifoQueue: true
       QueueName: demo_trustana_queue.fifo
-
