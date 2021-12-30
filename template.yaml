@@ -13,6 +13,9 @@ Resources:
           Properties:
             Path: /ratings
             Method: get
+      Environment:
+        Variables:
+          QUEUE_URL: !Ref MySqsQueue # Gets SQS Queue URL
   WorkerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -24,9 +27,6 @@ Resources:
           Properties:
             Queue: !GetAtt MySqsQueue.Arn
             BatchSize: 10
-      Environment:
-        Variables:
-          QUEUE_URL: !Ref InvocationQueue # Gets SQS Queue URL
   MySqsQueue:
     Type: AWS::SQS::Queue
     Properties:
