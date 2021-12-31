@@ -1,10 +1,7 @@
 const { SQSClient, SendMessageCommand } = require("@aws-sdk/client-sqs");
 
 const QUEUE_URL = process.env.QUEUE_URL;
-
-// Set the AWS Region.
 const REGION = "us-east-1";
-// Create SQS service object.
 const sqsClient = new SQSClient({ region: REGION });
 
 exports.index = async (event) => {
@@ -15,7 +12,7 @@ exports.index = async (event) => {
     MessageBody: JSON.stringify(eventBody),
     MessageDeduplicationId: "TheWhistler", // Required for FIFO queues
     MessageGroupId: "Group1", // Required for FIFO queues
-    QueueUrl: QUEUE_URL, //SQS_QUEUE_URL; e.g., 'https://sqs.REGION.amazonaws.com/ACCOUNT-ID/QUEUE-NAME'
+    QueueUrl: QUEUE_URL,
   };
 
   try {
