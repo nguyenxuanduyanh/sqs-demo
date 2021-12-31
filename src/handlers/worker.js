@@ -1,9 +1,13 @@
-exports.index = async function (event, context) {
+exports.index = async (event) => {
   console.log("event", event);
 
-  event.Records.forEach((record) => {
-    const { body } = record;
-    console.log(body);
-  });
-  return {};
+  const message = await Promise.all(
+    event.Records.forEach((record) => {
+      const { body } = record;
+      console.log(body);
+      return body;
+    })
+  );
+
+  return message;
 };
