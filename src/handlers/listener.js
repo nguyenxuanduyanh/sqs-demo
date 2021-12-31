@@ -8,8 +8,7 @@ const REGION = "us-east-1";
 const sqsClient = new SQSClient({ region: REGION });
 
 exports.index = async (event) => {
-  const { id, title, product_type, created_at } = event;
-
+  const { id, title, product_type, created_at } = JSON.parse(event.body);
   const eventBody = { id, title, product_type, created_at };
 
   const params = {
