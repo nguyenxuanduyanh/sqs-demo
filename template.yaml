@@ -35,3 +35,11 @@ Resources:
     Properties:
       FifoQueue: true
       QueueName: demo_trustana_queue.fifo
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt MyDeadLetterQueue.Arn
+        maxReceiveCount: 5
+  MyDeadLetterQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      FifoQueue: true
+      QueueName: MyDeadLetterQueueName
