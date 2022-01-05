@@ -54,4 +54,4 @@ Resources:
     Type: AWS::SQS::Queue
     Properties:
       FifoQueue: true
-      QueueName: MyDeadLetterQueueName
+      QueueName: my_dead_letter_queue_name.fifo
