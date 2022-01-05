@@ -17,7 +17,6 @@ exports.index = async (event) => {
   console.log('check: ', event.headers['x-shopify-api-version']);
   const moment = new Date(Date.now());
   if(event.headers['x-shopify-api-version']) {
-    console.log("test co shopify");
     eventBody['message_type'] = 'event';
     eventBody['entity_type'] = 'product';
     eventBody['entity_id'] = event.headers['x-shopify-product-id'];
