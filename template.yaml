@@ -30,6 +30,18 @@ Resources:
           Properties:
             Queue: !GetAtt MySqsQueue.Arn
             BatchSize: 10
+  FailureFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/failure.index
+      Runtime: nodejs12.x
+      Events:
+        MySQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt MyDeadLetterQueue.Arn
+            BatchSize: 10
+
   MySqsQueue:
     Type: AWS::SQS::Queue
     Properties:
